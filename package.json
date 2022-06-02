@@ -8,7 +8,8 @@
     "start": "node src/index.js",
     "start:producer:watch": "MODE=producer nodemon src/index.js --watch src --watch .env",
     "start:consumer:watch": "MODE=consumer nodemon src/index.js --watch src --watch .env",
-    "start:watch": "concurrently -n producer,consumer -c green,cyan \"npm:start:producer:watch\" \"npm:start:consumer:watch\""
+    "start:watch": "concurrently -n producer,consumer -c green,cyan \"npm:start:producer:watch\" \"npm:start:consumer:watch\"",
+    "build": "docker build -t christoment/producer-consumer:latest ."
   },
   "author": "",
   "license": "ISC",
