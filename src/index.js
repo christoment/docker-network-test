@@ -5,6 +5,7 @@ import { v4 } from 'uuid';
 
 dotenv.config();
 
+const HOST = process.env.HOST ?? 'http://localhost';
 const PORT = process.env.PORT ?? 4500;
 const DELAY = process.env.DELAY ?? 5000;
 const mode = process.env.MODE ?? 'producer';
@@ -26,7 +27,7 @@ if (mode === 'consumer') {
                     console.log(`Request #${attemptCount} initiated.`);
                 }
 
-                const result = await axios.get(`http://localhost:${PORT}`, { headers: { [ATTEMPT_HEADER]: attemptCount.toString() }});
+                const result = await axios.get(`${HOST}:${PORT}`, { headers: { [ATTEMPT_HEADER]: attemptCount.toString() }});
                 failedCount = 0;
                 resolve(result.data);
             } catch (e) {
