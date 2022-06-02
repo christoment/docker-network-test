@@ -11,6 +11,7 @@ const mode = process.env.MODE ?? 'producer';
 const ATTEMPT_HEADER = 'x-attempt';
 
 if (mode === 'consumer') {
+    console.log('Running in consumer mode');
     let failedCount = 0;
     let attemptCount = 0;
     
@@ -18,7 +19,7 @@ if (mode === 'consumer') {
         setTimeout(async () => {
             try {
                 attemptCount++;
-                
+
                 if (failedCount > 0) {
                     console.log(`Request #${attemptCount} initiated. Retry attempt #${failedCount}`);
                 } else {
@@ -43,12 +44,17 @@ if (mode === 'consumer') {
         }
     }
 } else {
-    http.createServer((req, res) => {
+    console.log('Running in producer mode');
+
+    const server = http.createServer((req, res) => {
         const requestIndex = req.headers[ATTEMPT_HEADER] ?? 'N/A';
         console.log(`Request #${requestIndex} received.`);
         const randomNumber = v4();
         res.writeHead(200);
         res.write(`Your random guid is ${randomNumber} - generated at ${new Date().toISOString()}`);
         res.end();
-    }).listen(PORT);
+    });
+    
+    server.on('listening', () => console.log(`Producer is ready and listening on port ${PORT}`));
+    server.listen(PORT);
 };
