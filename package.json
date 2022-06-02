@@ -1,0 +1,24 @@
+{
+  "name": "producer-consumer",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "start:producer:watch": "MODE=producer nodemon src/index.js --watch src --watch .env",
+    "start:consumer:watch": "MODE=consumer nodemon src/index.js --watch src --watch .env",
+    "start:watch": "concurrently -n producer,consumer -c green,cyan \"npm:start:producer:watch\" \"npm:start:consumer:watch\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "concurrently": "^7.2.1",
+    "nodemon": "^2.0.16"
+  }
+}
