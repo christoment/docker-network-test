@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  producer:
+    image: christoment/producer-consumer:latest
+    environment:
+      - MODE=producer
+    ports:
+      - 4500:4500
+  consumer:
+    image: christoment/producer-consumer:latest
+    environment:
+      - MODE=consumer
+      - HOST=http://host.docker.internal
